@@ -18,9 +18,9 @@ public class GuessNumberTest {
 
 
     @Before
-    public void init(){
+    public void setup(){
         String serverNumber = "9305";
-        this.guessNumber = new GuessNumber(serverNumber);
+        this.guessNumber = new GuessNumber(serverNumber,4);
     }
 
     @After
@@ -124,7 +124,7 @@ public class GuessNumberTest {
     public void should_return_4a0b_if_input_all_match_and_no_right(){
         String userNumber = "9305";
         String result = guessNumber.validate(userNumber);
-        assertEquals("4a0b", result);
+        assertEquals("Win !", result);
     }
 
 
