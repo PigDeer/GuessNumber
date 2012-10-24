@@ -14,23 +14,30 @@ import java.util.regex.Pattern;
 public class GuessNumber {
 
     private String number;
-    private int count;
+    private int numberSize;
+    private int guessTimes;
+    private int guessCount;
+
+    public static final String WIN = "You Win!";
+    public static final String LOSE = "You LOSE!";
+    public static final String OTHER = "Impossible!";
 
     public GuessNumber() {
 
     }
 
-    public GuessNumber(String s, int n) {
-        setNumber(s);
-        setCount(n);
+    public GuessNumber(int numberSize, int guessTimes) {
+        setNumberSize(numberSize);
+        setGuessTimes(guessTimes);
+        setGuessCount(0);
+        setNumber(createNumber());
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
+    public GuessNumber(String number, int numberSize, int guessTimes, int guessCount) {
+        this.number = number;
+        this.numberSize = numberSize;
+        this.guessTimes = guessTimes;
+        this.guessCount = guessCount;
     }
 
     public String getNumber() {
@@ -39,6 +46,30 @@ public class GuessNumber {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public int getNumberSize() {
+        return numberSize;
+    }
+
+    public void setNumberSize(int numberSize) {
+        this.numberSize = numberSize;
+    }
+
+    public int getGuessTimes() {
+        return guessTimes;
+    }
+
+    public void setGuessTimes(int guessTimes) {
+        this.guessTimes = guessTimes;
+    }
+
+    public int getGuessCount() {
+        return guessCount;
+    }
+
+    public void setGuessCount(int guessCount) {
+        this.guessCount = guessCount;
     }
 
     /**
@@ -50,7 +81,16 @@ public class GuessNumber {
         String s = str.replaceAll("\\s", "");
         if(validateStr(s)) {
             if(validateStr(number)){
-                return compareTwoStr(number, s);
+                guessCount ++;
+                String result = compareTwoStr(number, s);
+                if(guessCount == guessTimes){
+                    if(!result.equalsIgnoreCase(WIN)){
+                        return LOSE;
+                    }
+                }else if(guessCount>guessTimes){
+                    return OTHER;
+                }
+                return result;
             }
             return "对不起，服务器产生数据错误！";
         }
@@ -62,7 +102,7 @@ public class GuessNumber {
      * @return [xxxx].
      */
     public String createNumber() {
-        int [] ranArr = getRandomNumber(count);
+        int [] ranArr = getRandomNumber(numberSize);
         String str = "";
         for(int i=0; i<ranArr.length; i++){
             str += ranArr[i];
@@ -83,8 +123,8 @@ public class GuessNumber {
         int aNum = getMatchNumber(sArr, dArr, dArr.length);
         //获取b+a的数量
         int bNum = getRightNumber(sArr, dArr, dArr.length);
-        if(aNum == count){
-            return "Win !";
+        if(aNum == numberSize){
+            return WIN;
         }else{
             return aNum + "a" + (bNum-aNum) + "b";
         }
@@ -138,6 +178,18 @@ public class GuessNumber {
             ranArr [i] = seed [j];
         }
         return ranArr;
+    }
+
+
+    public static void main(String[] args)
+    {
+        GuessNumber gn = new GuessNumber(4,6);
+
+        String str = "1234";
+
+        String result = gn.validate(str);
+
+        System.out.println(result);
     }
 
 }

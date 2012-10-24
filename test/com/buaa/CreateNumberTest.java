@@ -20,9 +20,7 @@ public class CreateNumberTest {
 
     @Before
     public void setup(){
-        guessNumber = new GuessNumber();
-        guessNumber.setCount(4);
-        guessNumber.setNumber(guessNumber.createNumber());
+        guessNumber = new GuessNumber(4,6);
     }
 
     @Test
@@ -39,7 +37,7 @@ public class CreateNumberTest {
     @Test
     public void should_return_number_all_different(){
         String number = guessNumber.getNumber();
-        int count = guessNumber.getCount();
+        int count = guessNumber.getNumberSize();
         char [] sArr = number.toCharArray();
         int result = 0;
         for(int i=0;i<count;i++){
