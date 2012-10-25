@@ -1,5 +1,8 @@
 package com.buaa;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -170,26 +173,48 @@ public class GuessNumber {
      * @return int[n] int数组;
      */
     public static int[] getRandomNumber(int n) {
-        int [] seed = {0,1,2,3,4,5,6,7,8,9};
-        int [] ranArr = new int [n];
-        Random ran = new Random();
-        for(int i = 0 ; i<n ; i++){
-            int j = ran.nextInt(seed.length-i);
-            ranArr [i] = seed [j];
+        Random rand = new Random(System.currentTimeMillis());
+        int [] ranArr=new int[n];
+        for(int i=0;i<n;i++){
+            int num = rand.nextInt(10);
+            while(isInArray(num, ranArr,i)){
+                num = rand.nextInt(10);
+            }
+            ranArr[i]= num;
         }
         return ranArr;
+    }
+
+    public static boolean isInArray(int num, int[] array, int n){
+        for(int i=0;i<n;i++){
+            if(array[i]==num) return true;
+        }
+        return false;
     }
 
 
     public static void main(String[] args)
     {
         GuessNumber gn = new GuessNumber(4,6);
+        InputStreamReader in=null;
+        BufferedReader br=null;
+        in=new InputStreamReader(System.in);//该处的System.in是各InputSream类型的；
+        br=new BufferedReader(in);
+        String str="";
+        String result;
+        try{
+            System.out.println("游戏开始！\n");
+            do{
+                System.out.println("请输入您的猜测结果：\n");
+                str = br.readLine();//从输入流in中读入一行，并将读取的值赋值给字符串变量str
+                result = gn.validate(str);
+                System.out.println(result);
+            }while(result != GuessNumber.WIN && result != GuessNumber.LOSE);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
-        String str = "1234";
-
-        String result = gn.validate(str);
-
-        System.out.println(result);
+        System.out.println("游戏结束！\n");
     }
 
 }
