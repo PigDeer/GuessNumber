@@ -25,10 +25,6 @@ public class GuessTimesTest {
         int guessTimes = guessNumber.getGuessTimes();
         guessNumber.setGuessCount(guessTimes-1);
         String number = guessNumber.getNumber();
-        String str = guessNumber.createNumber();
-        while(str.equalsIgnoreCase(number)){
-            str = guessNumber.createNumber();
-        }
         String result = guessNumber.validate(number);
         assertEquals(GuessNumber.WIN, result);
     }

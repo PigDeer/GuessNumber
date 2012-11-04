@@ -168,7 +168,7 @@ public class GuessNumber {
     }
 
     /**
-     * 内部方法，校验字符串的合法性;
+     * 内部方法，产生n个随机数;
      * @param n 数组大小;
      * @return int[n] int数组;
      */
