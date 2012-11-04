@@ -205,7 +205,7 @@ public class GuessNumber {
         try{
             System.out.println("游戏开始！\n");
             do{
-                System.out.println("请输入您的猜测结果：\n");
+                System.out.println("请输入您的猜测结果：");
                 str = br.readLine();//从输入流in中读入一行，并将读取的值赋值给字符串变量str
                 result = gn.validate(str);
                 System.out.println(result);
@@ -213,8 +213,8 @@ public class GuessNumber {
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        System.out.println("游戏结束！\n");
+        System.out.println(gn.getNumber());
+        System.out.println("游戏结束！");
     }
 
 }

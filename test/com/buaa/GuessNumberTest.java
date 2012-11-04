@@ -3,6 +3,11 @@ package com.buaa;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,9 +18,36 @@ import static org.junit.Assert.assertEquals;
  * Time: 4:16 PM
  * To change this template use File | Settings | File Templates.
  */
+@RunWith(value= Parameterized.class)
 public class GuessNumberTest {
     private GuessNumber guessNumber;
+    private String inputStr;
+    private String outputStr;
 
+    public GuessNumberTest(String inputStr, String outputStr){
+        this.inputStr = inputStr;
+        this.outputStr = outputStr;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<String []> getParameters(){
+        return Arrays.asList(new String[][] {
+                {"1248", "0a0b"},
+                {"1249", "0a1b"},
+                {"1259", "0a2b"},
+                {"1059", "0a3b"},
+                {"5039", "0a4b"},
+                {"9128", "1a0b"},
+                {"9078", "1a1b"},
+                {"9038", "1a2b"},
+                {"9530", "1a3b"},
+                {"9378", "2a0b"},
+                {"9358", "2a1b"},
+                {"9350", "2a2b"},
+                {"9308", "3a0b"},
+                {"9305", "You Win!"},
+        });
+    }
 
     @Before
     public void setup(){
@@ -28,7 +60,13 @@ public class GuessNumberTest {
 
     }
 
+    @Test
+    public void params_test(){
+        String result = guessNumber.validate(inputStr);
+        assertEquals(outputStr, result);
+    }
 
+    /*
     @Test
     public void should_return_0a0b_if_input_no_match_and_no_right(){
         String userNumber = "1248";
@@ -126,6 +164,7 @@ public class GuessNumberTest {
         String result = guessNumber.validate(userNumber);
         assertEquals("You Win!", result);
     }
+    */
 
 
 
